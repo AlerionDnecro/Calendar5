@@ -60,26 +60,6 @@
              </div>
          </div>
     <script type="text/javascript">
-        //<![CDATA[
-        function addEventCalendar(evento) {
-            <%--evento: <%= Calend %>--%>
-            //const title = $(this).find('#schedule-title').val()
-            //const startDate = moment(new Date($(this).find('#schedule-start-date').val()), 'YYYY-MM-DD').format('YYYY-MM-DD') + 'T05:30:00.000Z'
-            //const endDate = moment(new Date($(this).find('#schedule-end-date').val()), 'YYYY-MM-DD').format('YYYY-MM-DD') + 'T05:30:00.000Z'
-            //const color = $(this).find('#schedule-color').val()
-            //console.log(startDate, endDate, color)
-            //const event = {
-            //    title: title,
-            //    start: startDate || '2020-12-22T02:30:00',
-            //    end: endDate || '2020-12-12T14:30:00',
-            //    color: color || '#7858d7'
-            //}
-
-            console.log(evento)
-           /* $(this).closest('#date-event').modal('hide')*/
-            //calendar1.addEvent(event)
-            calendar1.addEvent(evento)
-        }
-        //]]>
+       
     </script>
 </asp:Content>
