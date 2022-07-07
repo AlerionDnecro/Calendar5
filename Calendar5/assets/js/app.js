@@ -507,6 +507,20 @@ Index Of Script
         document.addEventListener('DOMContentLoaded', function () {
             var calendarEl = document.getElementById('calendar1');
 
+            $.ajax({
+                type: "POST",
+                url: "../../../Vista/Calendario.aspx/GetCalendarioSerializado",
+                data: '', // put your data here that you want to pass in server method
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (source) {
+                    alert(source.d);
+                },
+                failure: function (response) {
+                    alert(response.d);
+                }
+            });
+
             calendar1 = new FullCalendar.Calendar(calendarEl, {
                 selectable: true,
                 plugins: ["timeGrid", "dayGrid", "list", "interaction"],
@@ -525,6 +539,11 @@ Index Of Script
                     $('#schedule-end-date').val(info.dateStr)
                     $('#date-event').modal('show')
                 },
+                //events: [
+                //    source
+                //]
+
+
                 //events: [
                 //    {
                 //        title: 'Click for Google',
@@ -675,30 +694,6 @@ Index Of Script
             reader.readAsDataURL(input.files[0]);
         }
     }
-
-    //<![CDATA[
-    function addEventCalendar(evento) {
-           
-            /*  evento: <%= Calend %> */
-            //const title = $(this).find('#schedule-title').val()
-            //const startDate = moment(new Date($(this).find('#schedule-start-date').val()), 'YYYY-MM-DD').format('YYYY-MM-DD') + 'T05:30:00.000Z'
-            //const endDate = moment(new Date($(this).find('#schedule-end-date').val()), 'YYYY-MM-DD').format('YYYY-MM-DD') + 'T05:30:00.000Z'
-            //const color = $(this).find('#schedule-color').val()
-            //console.log(startDate, endDate, color)
-            //const event = {
-            //    title: title,
-            //    start: startDate || '2020-12-22T02:30:00',
-            //    end: endDate || '2020-12-12T14:30:00',
-            //    color: color || '#7858d7'
-            //}
-
-
-            //var calendar1 = localStorage.getItem("calendar1");
-            console.log(evento)
-            ////calendar1.addEvent(event)
-            calendar1.addEvent(evento);
-    }
-        //]]>
 
     $(".file-upload").on('change', function(){
         readURL(this);

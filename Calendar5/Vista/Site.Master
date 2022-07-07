@@ -6,8 +6,7 @@
 <head runat="server">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title></title>
-    <asp:ContentPlaceHolder ID="CPHHead" runat="server">
-    </asp:ContentPlaceHolder>
+  
     <link rel="shortcut icon" href="../assets/images/favicon.ico" />
       <link rel="stylesheet" href="../assets/css/backend.min.css?v=1.0.1">
       <link rel="stylesheet" href="../assets/vendor/@fortawesome/fontawesome-free/css/all.min.css">
@@ -17,6 +16,8 @@
     <link rel='stylesheet' href='../assets/vendor/fullcalendar/daygrid/main.css' />
     <link rel='stylesheet' href='../assets/vendor/fullcalendar/timegrid/main.css' />
     <link rel='stylesheet' href='../assets/vendor/fullcalendar/list/main.css' />
+      <asp:ContentPlaceHolder ID="CPHHead" runat="server">
+    </asp:ContentPlaceHolder>
 </head>
 <body class="fixed-top-navbar top-nav  ">
     <form id="form1" runat="server">
@@ -75,7 +76,7 @@
                         </div>
                     </div>
                 </div> 
-    <!-- Backend Bundle JavaScript -->
+         <!-- Backend Bundle JavaScript -->
     <script src="../assets/js/backend-bundle.min.js"></script>
     
     <!-- Chart Custom JavaScript -->
@@ -88,6 +89,6 @@
     <script src='../assets/vendor/fullcalendar/interaction/main.js'></script>
     
     <!-- app JavaScript -->
-    <script src="../assets/js/app.js"></script>
+    <script type="text/javascript" src="../assets/js/app.js"></script>
 </body>
 </html>

@@ -8,6 +8,8 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
+using System.Web.Script.Services;
+using System.Web.Services;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
@@ -40,17 +42,11 @@ namespace Calendar5.Vista
                 return GetCalendario();
             }
         }
+        public static string serializedCalend = "";
         public List<Calendar> list = new List<Calendar>();
         protected void Page_Load(object sender, EventArgs e)
         {
-            //var myTextboxControl = (gener)Page.FindControl("calendar1");
-            
-
-            //HtmlControl control = (HtmlControl)Page.FindControl("calendar1");
-
-            //HtmlControl control = (HtmlControl)pnl.FindControl("calendar1");
-
-
+           
             //const event = {
             //title: title,
             //    start: startDate || '2020-12-22T02:30:00',
@@ -72,18 +68,31 @@ namespace Calendar5.Vista
             //Response.Write(tb1.Value);
             //string theValue = Request.Form["calendar1"].ToString();
 
-            
+
+
+            serializedCalend = JsonConvert.SerializeObject(Calend);
+
+            //FiltrarListaSimpleCita(new CitaSimple.Criterio(CManejoSesion.CUsuario.CEmpresa.UIDEmpresa, Guid.Empty, CModulo.UIDModulo, TxtFolio.Text, uidssucursal, uidsespecialidad, uidsconsultorio, uidsturno, uidsdoctores, Guid.Empty, fecha1, fecha2, TxtNombres.Text, TxtPrimerApe.Text, TxtSegundoApe.Text, uidstipocita, uidsstatus, int.MinValue, int.MinValue, false, false));
+            FiltrarListaSimpleCita(new CitaSimple.Criterio(new Guid("ed0ff78d-f09d-41f1-8a75-80204feddf18"), Guid.Empty, new Guid("7dc31f3d-eb64-47cd-9056-3b926ec4a549"), "", "", "", "", "", "", Guid.Empty, DateTime.MinValue, DateTime.MinValue, "", "", "", "", "", int.MinValue, int.MinValue, false, false));
         }
         protected void Page_PreRender(object sender, EventArgs e)
         {
-           
-            //FiltrarListaSimpleCita(new CitaSimple.Criterio(CManejoSesion.CUsuario.CEmpresa.UIDEmpresa, Guid.Empty, CModulo.UIDModulo, TxtFolio.Text, uidssucursal, uidsespecialidad, uidsconsultorio, uidsturno, uidsdoctores, Guid.Empty, fecha1, fecha2, TxtNombres.Text, TxtPrimerApe.Text, TxtSegundoApe.Text, uidstipocita, uidsstatus, int.MinValue, int.MinValue, false, false));
-            FiltrarListaSimpleCita(new CitaSimple.Criterio(new Guid("ed0ff78d-f09d-41f1-8a75-80204feddf18"), Guid.Empty, new Guid("7dc31f3d-eb64-47cd-9056-3b926ec4a549"), "", "", "", "", "", "", Guid.Empty, DateTime.MinValue, DateTime.MinValue, "", "", "", "", "", int.MinValue, int.MinValue, false, false));
-            ScriptManager.RegisterStartupScript(this, typeof(Page), "initializeCalendar", "addEventCalendar(" + JsonConvert.SerializeObject(Calend) + ")", true);
+
+            
+            //ScriptManager.RegisterStartupScript(this, typeof(Page), "initializeCalendar", "addEventCalendar(" + JsonConvert.SerializeObject(Calend) + ")", true);
+            //Register script if you are using ScriptManager
+            //ScriptManager.RegisterClientScriptBlock(this, typeof(Page), "JSScript", "addEventCalendar(" + JsonConvert.SerializeObject(Calend) + ");", true);
         }
         public Calendar GetCalendario()
         {
             return new Calendar("PRUEBA", "2022-07-15T05:30:00.000Z", "2022-07-15T05:30:00.000Z", "#7858d7");
+        }
+        
+        [WebMethod]
+        [ScriptMethod()]
+        public static string GetCalendarioSerializado()
+        {
+            return serializedCalend;
         }
         public void FiltrarListaSimpleCita(CitaSimple.Criterio criterio)
         {
