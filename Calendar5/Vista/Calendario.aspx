@@ -61,7 +61,7 @@
          </div>
     <script type="text/javascript">
         //<![CDATA[
-        function addEventCalendar(evento) {
+        function addEventCalendar() {
 
             //const title = $(this).find('#schedule-title').val()
             //const startDate = moment(new Date($(this).find('#schedule-start-date').val()), 'YYYY-MM-DD').format('YYYY-MM-DD') + 'T05:30:00.000Z'
@@ -77,9 +77,9 @@
 
 
             //var calendar1 = localStorage.getItem("calendar1");
-            console.log(evento)
+            console.log('Calendario.aspx');
             ////calendar1.addEvent(event)
-            calendar1.addEvent(evento);
+            //calendar1.addEvent(evento);
         }
         //]]>
     </script>
