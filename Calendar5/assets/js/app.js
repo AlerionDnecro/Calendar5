@@ -514,11 +514,24 @@ Index Of Script
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (response) {
-                    console.log(response);
+                    console.log(response.d);
+
                     //var obj = $.parseJSON('{"name": "", "skills": "", "jobtitel": "Entwickler", "res_linkedin": "GwebSearch"}');
                     //alert(obj['jobtitel']);
-                    var evento = $.parseJSON(response.d);
-                    console.log(evento['title']);
+
+                    //var evento = $.parseJSON(response.d);
+                    //console.log(evento);
+
+                    var eventos = [];
+                    
+                    for (var i = 0; i < response.d.length; i++) {
+                        //console.log(response.d[i]);
+                        eventos.push( $.parseJSON(response.d[i]));  
+                        //console.log($.parseJSON(response.d[i]));
+                    }
+                    //console.log(eventos);
+
+
                     calendar1 = new FullCalendar.Calendar(calendarEl, {
                         selectable: true,
                         plugins: ["timeGrid", "dayGrid", "list", "interaction"],
@@ -536,10 +549,9 @@ Index Of Script
                             $('#schedule-start-date').val(info.dateStr)
                             $('#schedule-end-date').val(info.dateStr)
                             $('#date-event').modal('show')
-                        },
-                        events: [
-                            evento
-                        ]
+                        }
+                        ,events: eventos
+                        
 
 
                         //events: [

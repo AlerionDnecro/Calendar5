@@ -87,8 +87,16 @@ namespace Calendar5.Vista
             //serializedCalend = JsonConvert.SerializeObject(Calend);
             ////ScriptManager.RegisterStartupScript(this, typeof(Page), "initializeCalendar", "addEventCalendar()", true);
             ///
+            /// 
+            /// EJEMPLO DATOSMEDIX
             ////FiltrarListaSimpleCita(new CitaSimple.Criterio(CManejoSesion.CUsuario.CEmpresa.UIDEmpresa, Guid.Empty, CModulo.UIDModulo, TxtFolio.Text, uidssucursal, uidsespecialidad, uidsconsultorio, uidsturno, uidsdoctores, Guid.Empty, fecha1, fecha2, TxtNombres.Text, TxtPrimerApe.Text, TxtSegundoApe.Text, uidstipocita, uidsstatus, int.MinValue, int.MinValue, false, false));
-           FiltrarListaSimpleCita(new CitaSimple.Criterio(new Guid("ed0ff78d-f09d-41f1-8a75-80204feddf18"), Guid.Empty, new Guid("7dc31f3d-eb64-47cd-9056-3b926ec4a549"), "", "", "", "", "", "", Guid.Empty, DateTime.MinValue, DateTime.MinValue, "", "", "", "", "", int.MinValue, int.MinValue, false, false));
+            ///EJEMPLO 1
+            /// FiltrarListaSimpleCita(new CitaSimple.Criterio(new Guid("ed0ff78d-f09d-41f1-8a75-80204feddf18"), Guid.Empty, new Guid("7dc31f3d-eb64-47cd-9056-3b926ec4a549"), "", "", "", "", "", "", Guid.Empty, DateTime.MinValue, DateTime.MinValue, "", "", "", "", "", int.MinValue, int.MinValue, false, false));
+            /// STAGGING CLINICA MEDIMAR TODAS LAS CITAS
+            ///FiltrarListaSimpleCita(new CitaSimple.Criterio(new Guid("9d978144-e341-4df3-9ef3-600cfb5f3d73"), Guid.Empty, new Guid("7dc31f3d-eb64-47cd-9056-3b926ec4a549"), "", "", "", "", "", "", Guid.Empty, DateTime.MinValue, DateTime.MinValue, "", "", "", "", "", int.MinValue, int.MinValue, false, false));
+            /// STAGGING CLINICA MEDIMAR TODAS LAS CITAS DEL AÑO PRESENTE
+            FiltrarListaSimpleCita(new CitaSimple.Criterio(new Guid("9d978144-e341-4df3-9ef3-600cfb5f3d73"), Guid.Empty, new Guid("7dc31f3d-eb64-47cd-9056-3b926ec4a549"), "", "", "", "", "", "", Guid.Empty, new DateTime(int.Parse(DateTime.Now.Year.ToString()), 5, 1, 00, 00, 00), DateTime.MinValue, "", "", "", "", "", int.MinValue, int.MinValue, false, false));
+
             GetListCalendario();
         }
         protected void Page_PreRender(object sender, EventArgs e)
@@ -109,17 +117,23 @@ namespace Calendar5.Vista
         //}
         public  void GetListCalendario()
         {
-            DateTime datePast = DateTime.Now.AddMonths(-3);
-            ObservableCollection<CitaSimple> ListaSimpleCitas = new ObservableCollection<CitaSimple>((from d in _ListaSimpleCitas where d.DtmFechaHoraInicio >= datePast select d).ToList() as List<CitaSimple>);
-            List<Calendar> lista = new List<Calendar>();
-            if (ListaSimpleCitas.Count >= 5)
+            ////FILTRADO DE LISTA POR CODIGO
+            //DateTime datePast = new DateTime(int.Parse(DateTime.Now.Year.ToString()), 1, 1, 00, 00, 00);
+            ////DateTime datePast = DateTime.Now.AddMonths(-3);
+            //ObservableCollection<CitaSimple> ListaSimpleCitas = new ObservableCollection<CitaSimple>((from d in _ListaSimpleCitas where d.DtmFechaHoraInicio >= datePast select d).ToList() as List<CitaSimple>);
+
+            ///SIN FILTRADO DE LISTA POR CODIGO
+            ObservableCollection<CitaSimple> ListaSimpleCitas = _ListaSimpleCitas;
+
+            ///PROCESO DE CONVERSION
+            List <Calendar> lista = new List<Calendar>();
+            foreach (CitaSimple item in ListaSimpleCitas)
             {
-                //lista.Add(new Calendar { title = "PRUEBA", start = "2022-07-15T05:30:00.000Z", end = "2022-07-15T05:30:00.000Z", color = "#7858d7" });
-                lista.Add(new Calendar { title = ListaSimpleCitas[0].StrNombresPaciente, start = ListaSimpleCitas[0].DtmFechaHoraInicio.ToString("yyyy-MM-ddTHH:mm:ss.fffZ"), end = ListaSimpleCitas[0].DtmFechaHoraFin.ToString("yyyy-MM-ddTHH:mm:ss.fffZ"), color = "#7858d7" });
-                //lista.Add(new Calendar { title = _ListaSimpleCitas[1].StrNombresPaciente, start = _ListaSimpleCitas[1].DtmFechaHoraInicio.ToString("yyyy-MM-dd’T’HH:mm:ss.fff’Z’"), end = _ListaSimpleCitas[1].DtmFechaHoraFin.ToString("yyyy-MM-dd’T’HH:mm:ss.fff’Z’"), color = "#7858d7" });
-                //lista.Add(new Calendar { title = _ListaSimpleCitas[2].StrNombresPaciente, start = _ListaSimpleCitas[2].DtmFechaHoraInicio.ToString("yyyy-MM-dd’T’HH:mm:ss.fff’Z’"), end = _ListaSimpleCitas[2].DtmFechaHoraFin.ToString("yyyy-MM-dd’T’HH:mm:ss.fff’Z’"), color = "#7858d7" });
-                //lista.Add(new Calendar { title = _ListaSimpleCitas[3].StrNombresPaciente, start = _ListaSimpleCitas[3].DtmFechaHoraInicio.ToString("yyyy-MM-dd’T’HH:mm:ss.fff’Z’"), end = _ListaSimpleCitas[3].DtmFechaHoraFin.ToString("yyyy-MM-dd’T’HH:mm:ss.fff’Z’"), color = "#7858d7" });
-                //lista.Add(new Calendar { title = _ListaSimpleCitas[4].StrNombresPaciente, start = _ListaSimpleCitas[4].DtmFechaHoraInicio.ToString("yyyy-MM-dd’T’HH:mm:ss.fff’Z’"), end = _ListaSimpleCitas[4].DtmFechaHoraFin.ToString("yyyy-MM-dd’T’HH:mm:ss.fff’Z’"), color = "#7858d7" });
+                if ((item.DtmFechaHoraInicio-item.DtmFechaHoraFin).TotalMinutes < 30)
+                {
+                    item.DtmFechaHoraFin = item.DtmFechaHoraInicio.AddMinutes(30);
+                }
+                lista.Add(new Calendar { title = item.StrNombresPaciente, start = item.DtmFechaHoraInicio.ToString("yyyy-MM-ddTHH:mm:ss.fffZ"), end = item.DtmFechaHoraFin.ToString("yyyy-MM-ddTHH:mm:ss.fffZ"), color = "#7858d7" });
             }
             ListSerializedDates = new List<string>();
             foreach (Calendar item in lista)
@@ -132,7 +146,7 @@ namespace Calendar5.Vista
         [ScriptMethod()]
         public static List<string> GetCalendarioSerializado()
         {
-            //return  new JsonResult(new { title = "PRUEBA", start = "2022-07-15T05:30:00.000Z", end = "2022-07-15T05:30:00.000Z", color = "#7858d7" });
+             //new JsonResult(new { title = "PRUEBA", start = "2022-07-15T05:30:00.000Z", end = "2022-07-15T05:30:00.000Z", color = "#7858d7" });
 
             return ListSerializedDates;
 

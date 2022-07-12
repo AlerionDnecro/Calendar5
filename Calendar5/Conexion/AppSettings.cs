@@ -8,7 +8,7 @@ namespace Calendar5.Conexion
     public static class AppSettings
     {
 
-        static AppEnvironment Environment = AppEnvironment.Develop;
+        static AppEnvironment Environment = AppEnvironment.Staging;
 
         public static string AppUrl =
             Environment == AppEnvironment.Production ? "https://datosmedix.net" :
